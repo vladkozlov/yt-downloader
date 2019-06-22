@@ -1,6 +1,11 @@
 {
   "name": "YT Загрузчик",
   "short_name": "YT Загрузчик",
+  "version" : "0.0.8",
+  "author" : "Vladislav Kozlov",
+  "omnibox" : {
+    "keyword" : "ytd"
+  },
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -13,13 +18,13 @@
       "type": "image/png"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ff0000",
   "share_target":
   {
-    "action": "/#/",
+    "action": "/",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params":

@@ -16,12 +16,6 @@
               solo
             ></v-text-field>
             <v-btn color="primary" :loading="buttonLoading" @click="download">Скачать <v-icon right dark>cloud_download</v-icon></v-btn>
-            <v-card v-if="url || title || text">
-              <h1>Parameters</h1>
-              {{title}}
-              {{text}}
-              {{url}}
-            </v-card>
           </v-form>
 
           <v-card v-if="youtubeData">
@@ -56,20 +50,11 @@
 
 <script>
 import axios from 'axios'
-const testLink = "https://www.youtube.com/watch?v=jKv_N0IDS2A";
 const ytLinkRegExp = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/gi;
 
 export default {
   props:{
-    url: {
-      type: String,
-      default: ""
-    },
     text: {
-      type: String,
-      default: ""
-    },
-    title: {
       type: String,
       default: ""
     }
@@ -94,7 +79,7 @@ export default {
 
         this.buttonLoading = true
         axios
-          .get(`http://localhost:8081/getlinks?link=${this.link}`)
+          .get(`/api/getlinks?link=${this.link}`)
           .then((data) => {
             this.buttonLoading = false;
             console.log(data);
@@ -126,13 +111,8 @@ export default {
     }
   },
   mounted() {
-    console.log({
-      url: this.url,
-      text : this.text,
-      title: this.title
-    })
-    if (this.url) {
-      this.link = this.url;
+    if (this.text) {
+      this.link = this.text;
     }
   }
 }
