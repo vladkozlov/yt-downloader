@@ -1,4 +1,4 @@
-from views import get_youtube_links
+from backend.views import get_youtube_links
 import aiohttp_cors
 
 def setup_routes(app, cors):
