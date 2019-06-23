@@ -9,7 +9,6 @@
           >
             <v-text-field
               v-model="link"
-              label="Ссылка на YouTube видео"
               placeholder="Вставьте ссылку на YouTube видео"
               :rules="[v => isValid(v) || 'Введите корректную ссылку']"
               required
@@ -36,11 +35,6 @@
                     {{youtubeData.rating}}
                     <span class="font-weight-medium">Просмотров:</span> {{youtubeData.views}}
                   </v-flex>
-
-                  <span class="font-weight-medium">Описание:</span> 
-                  {{youtubeData.description}}
-                  
-                </v-layout>
             </v-container>
           </v-card>
       </v-flex>
