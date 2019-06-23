@@ -1,7 +1,7 @@
 {
   "name": "YT Загрузчик",
   "short_name": "YT Загрузчик",
-  "version" : "0.0.9",
+  "version" : "0.0.10",
   "author" : "Vladislav Kozlov",
   "omnibox" : {
     "keyword" : "ytd"

@@ -3,7 +3,7 @@
     <v-toolbar app color="primary">
       <v-toolbar-title class="white--text headline text-uppercase">
         <span>YouTube</span>
-        <span class="font-weight-light">Загрузчик</span>
+        <span class="font-weight-light">{{$t('app.title')}}</span>
       </v-toolbar-title>
     </v-toolbar>
 

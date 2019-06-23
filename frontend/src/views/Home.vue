@@ -9,32 +9,26 @@
           >
             <v-text-field
               v-model="link"
-              placeholder="Вставьте ссылку на YouTube видео"
-              :rules="[v => isValid(v) || 'Введите корректную ссылку']"
+              :placeholder="$t('textfield.linkFieldPlaceholder') "
+              :rules="[v => isValid(v) || $t('textfield.linkFieldValidRule')]"
               required
               solo
             ></v-text-field>
-            <v-btn color="primary" :loading="buttonLoading" @click="download">Скачать <v-icon right dark>cloud_download</v-icon></v-btn>
+            <v-btn color="primary" :loading="buttonLoading" @click="download">{{ $t('button.download') }} <v-icon right dark>cloud_download</v-icon></v-btn>
           </v-form>
 
           <v-card v-if="youtubeData">
             <v-container text-xs-left>
                 <v-layout column>
-                  <v-flex xs12>
-                    <span class="font-weight-medium">Название:</span>
-                    {{youtubeData.title}}
-                  </v-flex>
+                    <span><span class="font-weight-medium">{{ $t('video.title') }}:</span> {{youtubeData.title}}</span>
+                    <span><span class="font-weight-medium">{{ $t('video.rating') }}:</span> {{youtubeData.rating}}</span>
+                    <span><span class="font-weight-medium">{{ $t('video.views') }}:</span> {{youtubeData.views}}</span>
 
                   <template v-for="(stream ,i) in youtubeData.streams">
                     <v-btn :key="i" color="primary" @click="doStreamDownload(stream)">{{buttonNameGenerator(stream)}}</v-btn>  
                   </template>
 
-
-                  <v-flex xs12>
-                    <span class="font-weight-medium">Рейтинг:</span> 
-                    {{youtubeData.rating}}
-                    <span class="font-weight-medium">Просмотров:</span> {{youtubeData.views}}
-                  </v-flex>
+                </v-layout>
             </v-container>
           </v-card>
       </v-flex>
@@ -73,7 +67,7 @@ export default {
 
         this.buttonLoading = true
         axios
-          .get(`/api/getlinks?link=${this.link}`)
+          .get(`http://localhost:8089/getlinks?link=${this.link}`)
           .then((data) => {
             this.buttonLoading = false;
             console.log(data);
@@ -91,10 +85,10 @@ export default {
       switch (stream.resolution) {
         case '1080p':
         case '720p':
-            name += 'Высокое качестве'
+            name += this.$t('quality.high')
           break;
         default:
-          name += 'Низкое качество'
+          name += this.$t('quality.low')
           break;
       }
       name += ` (${format})`
