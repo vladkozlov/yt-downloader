@@ -34,7 +34,7 @@ export default {
         video: {
             title: "Title",
             rating: "Rating",
-            wathed: "Watched"
+            views: "Watched"
         },
         quality: {
             high: "High quality",

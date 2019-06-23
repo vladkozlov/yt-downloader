@@ -13,8 +13,16 @@ Vue.use(VueI18n)
 
 Vue.config.productionTip = false
 
+function getLocale() {
+  if (navigator.languages.includes('ru-RU') || navigator.languages.includes('ru-RU')) {
+    return 'ru-RU'
+  }
+  return 'en-US'
+}
+
+
 const i18n = new VueI18n({
-  locale: navigator.language, // set locale
+  locale: getLocale(), // set locale
   messages: locale
 })
 

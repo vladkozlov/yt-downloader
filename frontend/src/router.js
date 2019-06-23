@@ -12,6 +12,10 @@ export default new Router({
       name: 'home',
       props: (route) => ({ text: route.query.text }),
       component: Home
+    },
+    { 
+      path: '*', 
+      redirect: '/' 
     }
   ]
 })

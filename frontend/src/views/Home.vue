@@ -67,7 +67,7 @@ export default {
 
         this.buttonLoading = true
         axios
-          .get(`http://localhost:8089/getlinks?link=${this.link}`)
+          .get(`/api/getlinks?link=${this.link}`)
           .then((data) => {
             this.buttonLoading = false;
             console.log(data);
