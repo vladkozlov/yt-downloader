@@ -1,10 +1,13 @@
-import pytube
-from aiohttp import web
 import asyncio
+import logging
 import random
 import urllib.parse
 
-async def get_video_meta(link):
+import pytube
+from aiohttp import web
+
+
+def get_video_meta(link):
     video = pytube.YouTube(link)
     return video
 
@@ -19,10 +22,10 @@ async def get_youtube_links(request):
             elif request.query['progressiveonly'] == 'false':
                 yt_progressive = False
             else:
-                return web.json_response({'error': 'BAD_ARGS', "errorCode": random.randint(0, 2000)}, status=400)
-    
-        result = await asyncio.create_task(get_video_meta(yt_link))
-        
+                return web.json_response({'error': 'BAD_ARGS', "code": random.randint(0, 2000)}, status=400)
+
+        result = await request.loop.run_in_executor(request.app['executor'], get_video_meta, yt_link)
+
         video_streams = None
         if yt_progressive:
             video_streams = result.streams.filter(progressive=yt_progressive).all()
@@ -46,7 +49,7 @@ async def get_youtube_links(request):
         }
         return web.json_response(resp)
 
-    return web.json_response({'error': 'NO_LINK_PROVIDED', "errorCode": random.randint(0, 2000)}, status=400)
+    return web.json_response({'error': 'NO_LINK_PROVIDED', "code": random.randint(0, 2000)}, status=400)
 
 # async def get_video_url(request):
 #     if 'link' in request.query and 'itag' in request.query:

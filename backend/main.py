@@ -1,19 +1,24 @@
-import sys
 import argparse
+import asyncio
 import logging
-from aiohttp import web
-from backend.routes import setup_routes
+import sys
+from asyncio.events import get_event_loop
+
 import aiohttp_cors
+from aiohttp import web
+
+from backend.routes import setup_routes
+from backend.utils import setup_executor
 
 parser = argparse.ArgumentParser(description="YouTube Video Downloader backend")
 parser.add_argument('--path')
 parser.add_argument('--port')
 parser.add_argument('--host')
 
-def init_app():
+async def init_app():
     app = web.Application()
     cors = aiohttp_cors.setup(app)
-
+    await setup_executor(app)
     setup_routes(app, cors)
     return app
 
@@ -21,7 +26,10 @@ def init_app():
 def main(argv):
     logging.basicConfig(level=logging.DEBUG)
     
-    app = init_app()
+    loop = asyncio.get_event_loop()
+
+    app = loop.run_until_complete(init_app())
+
     args = parser.parse_args()
     logging.info("Program args {0}".format(args))
     config = {
