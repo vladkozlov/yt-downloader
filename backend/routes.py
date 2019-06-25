@@ -1,7 +1,7 @@
 from backend.views import get_youtube_links
 import aiohttp_cors
 
-def setup_routes(app, cors):
+def setup_routes(app, cors) -> None:
 
     resource = cors.add(app.router.add_resource("/getlinks"))
     route = cors.add(

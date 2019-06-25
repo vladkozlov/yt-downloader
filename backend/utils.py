@@ -14,7 +14,7 @@ def clean()-> None:
     # should be executed only in child processes
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-async def setup_executor(app: web.Application) -> ProcessPoolExecutor:
+async def setup_executor(app: web.Application):
 
     num_of_workers = multiprocessing.cpu_count()
 
@@ -26,10 +26,9 @@ async def setup_executor(app: web.Application) -> ProcessPoolExecutor:
     fs = [run(executor, warm) for i in range(0, num_of_workers)]
     await asyncio.gather(*fs)
 
-    async def close_excutor(app: web.Application) -> None:
+    async def close_executor() -> None:
         fs = [run(executor, clean) for i in range(0, num_of_workers)]
         await asyncio.shield(asyncio.gather(*fs))
         executor.shutdown(wait=True)
-    
-    app.on_cleanup.append(close_excutor)
-    app['executor'] = executor
+
+    return (executor, close_executor)
